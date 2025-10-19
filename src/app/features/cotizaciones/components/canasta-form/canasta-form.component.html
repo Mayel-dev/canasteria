@@ -1,0 +1,52 @@
+<div class="bg-gray-50 p-6 rounded-xl shadow-md mb-8">
+  <h2 class="text-xl font-semibold mb-4">Agregar Canastas</h2>
+
+  <form
+    [formGroup]="canastaForm"
+    (ngSubmit)="agregarCanasta()"
+    class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end"
+  >
+    <!-- Selector de canastas -->
+    <div>
+      <label class="block font-medium mb-1">Tipo de canasta</label>
+      <select
+        formControlName="canastaId"
+        class="input w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-300"
+      >
+        <option value="">Seleccionar...</option>
+
+        <!-- Tipos de canastas y precios -->
+        @for (canasta of canastasDisponibles; track canasta.id) {
+        <option [value]="canasta.id">
+          {{ canasta.nombre }} ({{
+            canasta.precioUnitario | currency : 'PEN' : 'symbol-narrow' : '1.2-2'
+          }}
+          )
+        </option>
+        }
+      </select>
+    </div>
+
+    <!-- Cantidad -->
+    <div>
+      <label class="block font-medium mb-1">Cantidad</label>
+      <input
+        type="number"
+        formControlName="cantidad"
+        min="1"
+        class="input w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-300"
+      />
+    </div>
+
+    <!-- Botón -->
+    <div class="flex justify-end">
+      <button
+        type="submit"
+        [disabled]="canastaForm.invalid"
+        class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg disabled:opacity-50"
+      >
+        Agregar
+      </button>
+    </div>
+  </form>
+</div>

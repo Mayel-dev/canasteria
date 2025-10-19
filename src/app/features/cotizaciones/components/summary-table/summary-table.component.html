@@ -1,0 +1,103 @@
+<section class="mt-6">
+  <h2 class="text-lg font-semibold mb-3">Resumen de Cotización</h2>
+
+  <!-- Información del cliente -->
+  @if (cliente) {
+  <div class="bg-gray-50 p-4 rounded-lg shadow mb-4">
+    <h3 class="font-semibold text-lg mb-2">Cliente Actual</h3>
+
+    <div
+      class="flex flex-wrap items-center text-base text-gray-800 gap-x-3 gap-y-1 leading-relaxed"
+    >
+      <span>•</span>
+      <span><strong>Contacto:</strong> {{ cliente.contacto }}</span>
+      <span>•</span>
+      @if (cliente.empresa) {
+      <span><strong>Empresa:</strong> {{ cliente.empresa }}</span>
+      <span>•</span>
+      } @if (cliente.ruc) {
+      <span><strong>RUC:</strong> {{ cliente.ruc }}</span>
+      <span>•</span>
+      } @if (cliente.telefono) {
+      <span><strong>Teléfono:</strong> {{ cliente.telefono }}</span>
+      <span>•</span>
+      } @if (cliente.email) {
+      <span><strong>Email:</strong> {{ cliente.email }}</span>
+      <span>•</span>
+      } @if (cliente.direccion) {
+      <span><strong>Dirección:</strong> {{ cliente.direccion }}</span>
+      <span>•</span>
+      } @if (cliente.distrito) {
+      <span><strong>Distrito:</strong> {{ cliente.distrito }}</span>
+      }
+    </div>
+  </div>
+  }
+
+  <!-- Tabla de canastas -->
+  <div class="overflow-x-auto rounded-lg border">
+    <table class="min-w-full text-sm">
+      <thead class="bg-gray-100 text-left">
+        <tr>
+          <th class="p-3">Canasta</th>
+          <th class="p-3">Precio Unitario (c/IGV)</th>
+          <th class="p-3">Cantidad</th>
+          <th class="p-3">Subtotal</th>
+          <th class="p-3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (item of items; track item.canasta.id; let i = $index) {
+        <tr class="border-t">
+          <td class="p-3">{{ item.canasta.nombre }}</td>
+          <td class="p-3">
+            {{ item.canasta.precioUnitario | currency : 'PEN' : 'symbol-narrow' : '1.2-2' }}
+          </td>
+          <td class="p-3">{{ item.cantidad }}</td>
+          <td class="p-3">
+            {{
+              item.canasta.precioUnitario * item.cantidad
+                | currency : 'PEN' : 'symbol-narrow' : '1.2-2'
+            }}
+          </td>
+          <td class="p-3 text-right">
+            <button (click)="eliminar.emit(i)" class="text-red-600 hover:underline">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+        } @if (items.length === 0) {
+        <tr>
+          <td colspan="5" class="p-4 text-center text-gray-500">No hay canastas agregadas</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Totales -->
+  <div class="mt-4 text-right space-y-1">
+    <p>
+      <strong>Subtotal (sin IGV):</strong>
+      {{ subtotal | currency : 'PEN' : 'symbol-narrow' : '1.2-2' }}
+    </p>
+    <p>
+      <strong>IGV (18% incluido):</strong>
+      {{ igv | currency : 'PEN' : 'symbol-narrow' : '1.2-2' }}
+    </p>
+    <p class="text-lg font-semibold">
+      <strong>Total:</strong>
+      {{ total | currency : 'PEN' : 'symbol-narrow' : '1.2-2' }}
+    </p>
+  </div>
+
+  <div class="mt-4 text-right">
+    <button
+      (click)="generarPDF()"
+      class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg transition-all"
+    >
+      Generar Cotización (PDF)
+    </button>
+  </div>
+</section>

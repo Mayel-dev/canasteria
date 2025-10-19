@@ -1,0 +1,40 @@
+<form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="grid grid-cols-2 gap-4 mb-5">
+  <div>
+    <label class="label">RUC</label>
+    <input formControlName="ruc" type="text" class="input" />
+  </div>
+
+  <div>
+    <label class="label">Empresa</label>
+    <input formControlName="empresa" type="text" class="input" />
+  </div>
+
+  <div>
+    <label class="label">Contacto</label>
+    <input formControlName="contacto" type="text" class="input" />
+  </div>
+
+  <div>
+    <label class="label">Teléfono</label>
+    <input formControlName="telefono" type="text" class="input" />
+  </div>
+
+  <div>
+    <label class="label">Email</label>
+    <input formControlName="email" type="email" class="input" />
+  </div>
+
+  <div>
+    <label class="label">Dirección</label>
+    <input formControlName="direccion" type="text" class="input" />
+  </div>
+
+  <div class="col-span-2">
+    <label class="label">Distrito de entrega</label>
+    <input formControlName="distrito" type="text" class="input w-full" />
+  </div>
+
+  <div class="col-span-2 mt-4">
+    <button type="submit" class="btn">Guardar/Actualizar cliente</button>
+  </div>
+</form>
