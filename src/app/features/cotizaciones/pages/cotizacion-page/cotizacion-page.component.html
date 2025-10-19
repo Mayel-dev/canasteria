@@ -1,0 +1,17 @@
+<section class="p-6">
+  <h2 class="text-2xl font-semibold mb-5">Datos del cliente</h2>
+
+  <!-- FORMULARIO DEL CLIENTE -->
+  <app-client-form (clienteGuardado)="guardarCliente($event)"></app-client-form>
+
+  <!-- FORMULARIO DE CANASTAS -->
+  <app-canasta-form (canastaAgregada)="agregarCanasta($event)"></app-canasta-form>
+  <!-- TABLA DE RESUMEN -->
+  <app-summary-table
+    [cliente]="cliente"
+    [items]="canastasSeleccionadas"
+    (eliminar)="eliminarCanasta($event)"
+  ></app-summary-table>
+  
+
+</section>
